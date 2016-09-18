@@ -9,13 +9,5 @@ BOARD_KERNEL_CMDLINE := console=ttyS0,115200n8 mem=456M androidboot.console=ttyS
 # Bluetooth
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/samsung/corsica/bluetooth
 
-# Recovery
-BOARD_LDPI_RECOVERY := true
-ifeq ($(TWRP_BUILD),true)
--include device/samsung/twrp-common/twrp.mk
-else
-TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/rootdir/etc/fstab.rhea_ss_corsica
-endif
-
 # inherit from the proprietary version
 -include vendor/samsung/corsica/BoardConfigVendor.mk

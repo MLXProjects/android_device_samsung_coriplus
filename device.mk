@@ -23,13 +23,6 @@ $(call inherit-product, device/samsung/rhea-common/rhea.mk)
 PRODUCT_AAPT_CONFIG := normal ldpi mdpi nodpi
 PRODUCT_AAPT_PREF_CONFIG := ldpi
 
-# Init scripts
-PRODUCT_PACKAGES += \
-    fstab.rhea_ss_corsica \
-    init.rhea_ss_corsica.rc \
-    init.recovery.rhea_ss_corsica.rc \
-    ueventd.rhea_ss_corsica.rc
-
 # display prop for corsica
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.sf.lcd_density=120 \
