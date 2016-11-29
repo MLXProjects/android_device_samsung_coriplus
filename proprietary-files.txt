@@ -1,5 +1,5 @@
 #bin
-bin/atrace		
+bin/at_distributor
 bin/atx		
 bin/atxd	
 bin/BCM4330B1_002.001.003.0967.1089.hcd
@@ -24,7 +24,6 @@ etc/audio_policy.conf
 etc/DiamondVoice.txt
 etc/gps/glconfig.xml
 etc/gps.conf
-etc/media_profiles.xml
 etc/media_codecs.xml
 etc/srm.bin
 etc/Volume.db
@@ -168,9 +167,9 @@ lib/libsamsungRecord.so
 lib/libsamsungSoundbooster.so		
 lib/lib_Samsung_Resampler.so		
 lib/lib_Samsung_SB_AM_for_ICS_v03008.so		
-lib/libsamsungtts.so	
+lib/libsamsungtts.so
 
-#usr	
+#usr
 usr/lib/alsa-lib/libasound_module_pcm_bcmfilter.so
 usr/lib/alsa-lib/libbcm_hp_filter.so
 usr/lib/alsa-lib/libbcm_test_filter.so
