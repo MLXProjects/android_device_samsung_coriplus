@@ -11,7 +11,11 @@ on init
     write /sys/fs/selinux/enforce 0
     
     # Setup the global environment
+<<<<<<< HEAD
     export LD_SHIM_LIBS "/system/lib/libBrcmOMX_Component.so|libsamsung_symbols.so"
+=======
+    export LD_SHIM_LIBS /system/lib/hw/camera.rhea.so|libcamera_symbols.so
+>>>>>>> 9b82c1a... rootdir: Export shim on init
 
     mkdir /tmp
     mount tmpfs tmpfs /tmp
