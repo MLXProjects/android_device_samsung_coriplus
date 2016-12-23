@@ -24,7 +24,7 @@ BOARD_LDPI_RECOVERY := true
 ifeq ($(TWRP_BUILD),true)
 -include device/samsung/twrp-common/twrp.mk
 else
-TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/rootdir/etc/fstab.rhea_ss_corsica
+TARGET_RECOVERY_FSTAB := device/samsung/init/fstab.rhea
 endif
 
 # inherit from the proprietary version
