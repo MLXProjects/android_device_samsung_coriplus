@@ -18,11 +18,17 @@
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 $(call inherit-product-if-exists, vendor/samsung/corsica/corsica-vendor.mk)
 $(call inherit-product, device/samsung/rhea-common/rhea.mk)
-$(call inherit-product, device/samsung/init/init.mk)
 
 # LDPI assets
 PRODUCT_AAPT_CONFIG := normal ldpi mdpi nodpi
 PRODUCT_AAPT_PREF_CONFIG := ldpi
+
+# Init scripts
+PRODUCT_PACKAGES += \
+    fstab.rhea_ss_corsica \
+    init.rhea_ss_corsica.rc \
+    init.recovery.rhea_ss_corsica.rc \
+    ueventd.rhea_ss_corsica.rc
 
 # display prop for corsica
 PRODUCT_PROPERTY_OVERRIDES += \
