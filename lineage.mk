@@ -9,7 +9,7 @@ $(call inherit-product, device/samsung/corsica/device.mk)
 
 ## Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := corsica
-PRODUCT_NAME := cm_corsica
+PRODUCT_NAME := lineage_corsica
 PRODUCT_BRAND := samsung
 PRODUCT_MANUFACTURER := samsung
 PRODUCT_MODEL := GT-S5312
