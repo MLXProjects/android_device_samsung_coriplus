@@ -1,3 +1,3 @@
-ifeq ($(TARGET_DEVICE),corsica)
+ifeq ($(TARGET_DEVICE),coriplus)
     include $(all-subdir-makefiles)
 endif
