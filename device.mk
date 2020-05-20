@@ -31,7 +31,7 @@ PRODUCT_PACKAGES += \
     init.recovery.rhea_ss_coriplus.rc \
     ueventd.rhea_ss_coriplus.rc
 
-# display prop for corsica
+# display prop for coriplus
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.sf.lcd_density=120 \
     ro.lcd_brightness=160 \
