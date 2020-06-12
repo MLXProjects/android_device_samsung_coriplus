@@ -1,9 +1,8 @@
-# CyanogenMod-11.0 Device tree for Samsung GT-S5301x (coriplus)
-Based on corsica's device tree due to high compatibility between them
+# CyanogenMod-11.0 Device tree for Samsung GT-S5310x,S5312x (corsica)
 
 ### Specs (Physically inspected):
   - CPU: Cortex-A9 (Single Core)
-  - Codename: coriplus
+  - Codename: corsica
   - Display Resolution: 240x320
   - EMMC: 4GB
   - Family: KONA (BROADCOM)
@@ -13,22 +12,21 @@ Based on corsica's device tree due to high compatibility between them
   - Platform: rhea_ss (BROADCOM)
   - RAM: 512MB (not shared with GPU)
   - Sensor: Accelerometer,Compass
-  - Shipped with Android 4.0.4
-  - SoC: BCM21654 (850MHz)
-  - Touch Panel: TMA140 (Max 2 Touch Points)
-  - WIFI/Bluetooth/FM-Radio: BCM4334
+  - Shipped with Android 4.1.2
+  - SoC: BCM21654G (850MHz)
+  - Touch Panel: IST30XX (Max 2 Touch Points?)
+  - WIFI/Bluetooth/FM-Radio: BCM4330
 
-![Samsung Galaxy Pocket Plus](https://fdn2.gsmarena.com/vv/pics/samsung/samsung-galaxy-pocket-plus-s5301-black.jpg "Samsung Galaxy Pocket Plus")
+![Samsung Galaxy Pocket Neo](http://cdn2.gsmarena.com/vv/pics/samsung/samsung-galaxy-pocket-neo1.jpg "Samsung Galaxy Pocket Neo")
 
 ### Notice:
   - Apply patch to source code before build
 
 ### Other resource:
-  - Kernel source: https://github.com/MLXProjects/android_kernel_rhea
-  - Vendor blobs: https://github.com/MLXProjects/proprietary_vendor_samsung
+  - Kernel source: https://github.com/bcm216xx/android_kernel_rhea
+  - Vendor blobs: https://github.com/bcm216xx/android_vendor_samsung
 
 ### Credits (Sort by alphabetical order):
-  - bcm216xx
   - Dhinesh77
   - karthick111
   - Pawitp

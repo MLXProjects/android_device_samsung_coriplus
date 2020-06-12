@@ -15,4 +15,4 @@ PRODUCT_MANUFACTURER := samsung
 PRODUCT_MODEL := GT-S5301
 
 #Set build fingerprint / ID / Prduct Name ect.
-PRODUCT_BUILD_PROP_OVERRIDES += PRODUCT_NAME=coriplus TARGET_DEVICE=coriplus BUILD_FINGERPRINT=samsung/coriplus/coriplus:4.4.4/AB01CDEF/S5301LUBAMEU:user/release-keys PRIVATE_BUILD_DESC="coriplus-user 4.4.4 AB01CDEF S5301LUBAMEU release-keys"
+PRODUCT_BUILD_PROP_OVERRIDES += PRODUCT_NAME=coriplus TARGET_DEVICE=coriplus BUILD_FINGERPRINT=samsung/coriplus/coriplus:4.1.2/JZO54K/S5312DDAMG1:user/release-keys PRIVATE_BUILD_DESC="coriplusdd-user 4.1.2 JZO54K S5312DDAMG1 release-keys"
