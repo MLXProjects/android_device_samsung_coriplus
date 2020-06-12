@@ -1,4 +1,4 @@
-# CyanogenMod-12.1 Device tree for Samsung GT-S5301x and maybe S5303x (coriplus)
+# CyanogenMod-11.0 Device tree for Samsung GT-S5301x and maybe S5303x (coriplus)
 
 ### Specs (Physically inspected):
   - CPU: Cortex-A9 (Single Core)
@@ -21,7 +21,7 @@
 
 ### Other resource:
   - Kernel source: https://github.com/MLXProjects/android_kernel_rhea
-  - Vendor blobs: https://github.com/MLXProjects/android_vendor_samsung
+  - Vendor blobs: https://github.com/MLXProjects/android_vendor_samsung_coriplus
 
 ### Credits (Sort by alphabetical order):
   - Dhinesh77
