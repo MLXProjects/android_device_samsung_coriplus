@@ -17,7 +17,7 @@
   - Touch Panel: TMA140 (Max 2 Touch Points?)
   - WIFI/Bluetooth/FM-Radio: BCM4334
 
-![Samsung Galaxy Pocket Plus](http://cdn2.gsmarena.com/vv/pics/samsung/samsung-galaxy-pocket-plus1.jpg "Samsung Galaxy Pocket Plus")
+![Samsung Galaxy Pocket Plus](https://fdn2.gsmarena.com/vv/pics/samsung/samsung-galaxy-pocket-plus-s5301-black.jpg "Samsung Galaxy Pocket Plus")
 
 ### Other resource:
   - Kernel source: https://github.com/MLXProjects/android_kernel_rhea
