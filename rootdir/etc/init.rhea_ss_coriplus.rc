@@ -1,5 +1,3 @@
-
-
 import init.bcm2165x.usb.rc
 import init.log.rc
 
@@ -10,17 +8,27 @@ on early-init
 
 on init
 
-    write /sys/fs/selinux/enforce 0
-    
-    # Setup the global environment
-    export LD_SHIM_LIBS "/system/lib/libBrcmOMX_Component.so|libsamsung_symbols.so"
-
     mkdir /tmp
     mount tmpfs tmpfs /tmp
     chmod 1775 /tmp
 
-    symlink /sdcard /mnt/sdcard
-    symlink /sdcard /storage/sdcard0
+    # See storage config details at http://source.android.com/tech/storage/
+    mkdir /mnt/shell/emulated 0700 shell shell
+    mkdir /storage/emulated 0555 root root
+
+    export EXTERNAL_STORAGE /storage/emulated/legacy
+    export EMULATED_STORAGE_SOURCE /mnt/shell/emulated
+    export EMULATED_STORAGE_TARGET /storage/emulated
+
+    # Support legacy paths
+    symlink /storage/emulated/legacy /sdcard
+    symlink /storage/emulated/legacy /mnt/sdcard
+    symlink /storage/emulated/legacy /storage/sdcard0
+    symlink /mnt/shell/emulated/0 /storage/emulated/legacy
+
+    export SECONDARY_STORAGE /storage/sdcard1
+    mkdir /mnt/media_rw/sdcard1 0700 media_rw media_rw
+    mkdir /storage/sdcard1 0700 root root
 
     symlink /efs /factory
 
@@ -34,40 +42,8 @@ on post-fs-data
     mkdir /data/media 0770 media_rw media_rw
     chown media_rw media_rw /data/media
 
-# create basic filesystem structure
-    mkdir /data/misc 01775 system misc
-    mkdir /data/misc/bluetoothd 0770 bluetooth bluetooth
-    mkdir /data/misc/bluetooth 0770 system system
-    mkdir /data/misc/keystore 0700 keystore keystore
-    mkdir /data/misc/keychain 0771 system system
-    mkdir /data/misc/vpn 0770 system vpn
-    mkdir /data/misc/systemkeys 0700 system system
-    mkdir /data/misc/vpn/profiles 0770 system system
-    # give system access to wpa_supplicant.conf for backup and restore
-    mkdir /data/misc/wifi 0770 wifi system
-    mkdir /efs/wifi 0775 radio system
-    chown system system /efs/wifi/.mac.info
-    chmod 0664 /efs/wifi/.mac.info
-    mkdir /efs/bluetooth 0775 radio system
-    mkdir /efs/imei 0775 radio system
-#    chmod 0770 /data/misc/wifi
-#    chmod 0660 /data/misc/wifi/wpa_supplicant.conf
-    mkdir /data/misc/wifi/sockets 0775 wifi wifi
-    mkdir /data/misc/dhcp 0775 dhcp dhcp
-#    chown dhcp dhcp /data/misc/dhcp
-    mkdir /data/local 0751 root root
-    mkdir /data/local/tmp 0771 shell shell
-    mkdir /data/data 0771 system system
-    mkdir /data/app-private 0771 system system
-    mkdir /data/app 0771 system system
-    mkdir /data/property 0700 root root
-    mkdir /data/misc/radio 0775 radio system
-    mkdir /data/misc/radio/hatp 0775 radio system    
-
     # Set indication (checked by vold) that we have finished this action
     setprop vold.post_fs_data_done 1
-
-    restorecon_recursive /sys/devices/system/cpu/cpufreq/ondemand
 
     #for wifi
     mkdir /efs/wifi 0775 radio system
@@ -211,18 +187,21 @@ on boot
 # Enable dithering algorithm
     setprop fb.force.dithering 1
 
-# permission for gps
+# permissions for gps.
+	mkdir /data/gps 0770 gps system
+    chown gps system /data/gps
+	chmod 0770 /data/gps
     chown gps system /system/etc/gps/glconfig.xml
     chmod 0660 /system/etc/gps/glconfig.xml
+	chown gps system /system/etc/gps
 
-    mkdir /dev/socket/agps
-    chown gps system /dev/socket/agps
-    chmod 0775 /dev/socket/agps
+	chmod 0770 /system/etc/gps
+	chown gps system /system/bin/glgps
+	chmod 0770 /system/bin/glgps
 
-    chown gps system /system/etc/gps
-    chmod 0770 /system/etc/gps
+	chown gps system /system/bin/gpslogd
+	chmod 0777 /system/bin/gpslogd
 
-    chown gps system /system/bin/glgps
     chmod 0777 /dev/i2c-1
     chmod 0777 /proc/i2c/i2c1/rxFIFO
 
@@ -232,32 +211,24 @@ on boot
     write /sys/class/gpio/export 28
     chown gps system /sys/class/gpio/gpio28/value
     chown gps system /sys/class/gpio/gpio28/direction
+	write /sys/class/gpio/gpio28/direction out
     write /sys/class/gpio/gpio28/value 0
-    write /sys/class/gpio/gpio28/direction out
 
     write /sys/class/gpio/export 97
-    chown gps system /sys/class/gpio/gpio97/value
-    chown gps system /sys/class/gpio/gpio97/direction
-    write /sys/class/gpio/gpio97/value 0
+    chown radio system /sys/class/gpio/gpio97/value
+    chown radio system /sys/class/gpio/gpio97/direction
     write /sys/class/gpio/gpio97/direction out
-
+    write /sys/class/gpio/gpio97/value 0
+    
 #for bluetooth. permission for host interface
     chown root bluetooth /dev/ttyS0
     chmod 0777 /dev/ttyS0
-    chmod 0777 /system/bin/btld
-
-# permission for FMRadion Intenna
-    write /sys/class/gpio/export 92
-    chown system system /sys/class/gpio/gpio92/value
-    chown system system /sys/class/gpio/gpio92/direction
-    write /sys/class/gpio/gpio92/value 0
-    write /sys/class/gpio/gpio92/direction out
 
 # Permission for pm debug - force sleep
     chown system system /sys/module/rhea_pm_dbg/parameters/debug
 
 # SEC_PRODUCT_FEATURE_COMMON_USE_MULTISIM
-    setprop ro.multisim.simslotcount 1
+    setprop ro.multisim.simslotcount 2
 
     # for multi csc
     chown radio radio /proc/LinuStoreIII/efs_info 
@@ -299,7 +270,7 @@ on boot
 # Switch Device
     chown system radio /sys/class/sec/switch/adc
 
-#voice Solution
+#voice Soulution
     copy /system/etc/DiamondVoice.txt /data/DiamondVoice.txt
     chmod 0777 /data/DiamondVoice.txt	
     copy /system/etc/DiamondVoice_Filter.txt /data/DiamondVoice_Filter.txt
@@ -318,6 +289,7 @@ on boot
 on fs
     mount_all /fstab.rhea_ss_coriplus
     swapon_all fstab.rhea_ss_coriplus
+    setprop ro.crypto.fuse_sdcard true
 
 # For NV Read/Write 
 	chown radio system /dev/block/mmcblk0p18    
@@ -406,8 +378,18 @@ service rhea-ril-daemon /system/bin/rild
     user root
     group radio cache inet misc audio system sdcard_rw log sdcard_r
 
-service wpa_supplicant /system/bin/wpa_supplicant \
-    -Dnl80211 -iwlan0 -puse_p2p_group_interface=1 -e/data/misc/wifi/entropy.bin
+# create virtual SD card at /storage/sdcard, based on the /data/media directory
+# daemon will drop to user/group system/media_rw after initializing
+# underlying files in /data/media will be created with user and group media_rw (1023)
+service sdcard /system/bin/sdcard -u 1023 -g 1023 -l /data/media /mnt/shell/emulated
+    class late_start
+    oneshot
+
+service wpa_supplicant /system/bin/logwrapper /system/bin/wpa_supplicant \
+    -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf \
+    -I/system/etc/wifi/wpa_supplicant_overlay.conf \
+    -e/data/misc/wifi/entropy.bin \
+    -O/data/misc/wifi/sockets -g@android:wpa_wlan0
     #   we will start as root and wpa_supplicant will switch to user wifi
     #   after setting up the capabilities required for WEXT
     #   user wifi
@@ -417,12 +399,13 @@ service wpa_supplicant /system/bin/wpa_supplicant \
     disabled
     oneshot
 
-#service p2p_supplicant /system/bin/logwrapper /system/bin/wpa_supplicant -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf \
-#    -I/system/etc/wifi/wpa_supplicant_overlay.conf -N \
-#    -ip2p0 -Dnl80211 -c/data/misc/wifi/p2p_supplicant.conf \
-#    -I/system/etc/wifi/p2p_supplicant_overlay.conf \
-#    -e/data/misc/wifi/entropy.bin -puse_p2p_group_interface=1 \
-#    -O/data/misc/wifi/sockets -g@android:wpa_wlan0
+service p2p_supplicant /system/bin/logwrapper /system/bin/wpa_supplicant \
+    -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf \
+    -I/system/etc/wifi/wpa_supplicant_overlay.conf -N \
+    -ip2p0 -Dnl80211 -c/data/misc/wifi/p2p_supplicant.conf \
+    -I/system/etc/wifi/p2p_supplicant_overlay.conf \
+    -e/data/misc/wifi/entropy.bin -puse_p2p_group_interface=1 \
+    -O/data/misc/wifi/sockets -g@android:wpa_wlan0
 #   we will start as root and wpa_supplicant will switch to user wifi
 #   after setting up the capabilities required for WEXT
 #   user wifi
@@ -452,28 +435,6 @@ service iprenew_p2p /system/bin/dhcpcd -n
     disabled
     oneshot
 
-#for WiFi MFG(TestMode)
-service mfgloader /system/bin/mfgloader
-	class main
-	disabled
-	oneshot
-
-service wlandutservice /system/bin/wlandutservice
-	class main
-	user system
-	group wifi net_raw net_admin system inet
-	disabled
-	oneshot
-
-service bluetoothd /system/bin/logwrapper /system/bin/bluetoothd -n -d
-    class main
-    socket bluetooth stream 660 bluetooth bluetooth
-    socket dbus_bluetooth stream 660 bluetooth bluetooth
-    # init.rc does not yet support applying capabilities, so run as root and
-    # let bluetoothd drop uid to bluetooth with the right linux capabilities
-    group bluetooth net_bt_admin misc
-    disabled
-
 # Bluetooth PAN
 service dhcpcd_bt-pan /system/bin/dhcpcd -ABKL
 	class main
@@ -488,13 +449,8 @@ service iprenew_bt-pan /system/bin/dhcpcd -n
 # TODO: btld is only used for FM
 
 service macloader /system/bin/macloader
-	class late_start
+	class main
 	oneshot
-
-# GSM/HSDPA data workaround
-service data_workaround /system/bin/sh /ril_data.sh
-     user root
-     disabled
 
 on property:init.svc.macloader=stopped
     chown system root /data/.cid.info
@@ -504,7 +460,6 @@ on property:init.svc.macloader=stopped
 # end of wifi
 
 service gpsd /system/bin/glgps -c /system/etc/gps/glconfig.xml
-     setenv LD_PRELOAD /system/lib/libglgps-compat.so
     class late_start
     user gps
     group system sdcard_rw inet root radio wifi
@@ -530,6 +485,12 @@ on property:dev.bootcomplete=1
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor ondemand
     write /sys/block/mmcblk0/queue/scheduler cfq
 
+# fusewrapped external sdcard daemon running as media_rw (1023)
+service fuse_sdcard1 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard1 /storage/sdcard1
+    class late_start
+    oneshot
+    disabled
+
 # GSM/HSDPA data Workaroud
 on property:gsm.defaultpdpcontext.active=true
     start data_workaround
@@ -547,7 +508,3 @@ on property:sys.perf.profile=1
 on property:sys.perf.profile=2
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "performance"
 
-service swap /swap.sh
-   class main
-   user root
-   oneshot

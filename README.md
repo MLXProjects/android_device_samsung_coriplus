@@ -1,6 +1,4 @@
-# CyanogenMod-13.0 Device tree for Samsung GT-S5301x (coriplus)
-Based on corsica's device tree due to high compatibility between them
->>>>>>> 291c6de... Update README.md
+# CyanogenMod-12.1 Device tree for Samsung GT-S5301x and maybe S5303x (coriplus)
 
 ### Specs (Physically inspected):
   - CPU: Cortex-A9 (Single Core)
@@ -15,25 +13,22 @@ Based on corsica's device tree due to high compatibility between them
   - RAM: 512MB (not shared with GPU)
   - Sensor: Accelerometer,Compass
   - Shipped with Android 4.0.4
-  - SoC: BCM21654 (850MHz)
-  - Touch Panel: TMA140 (Max 2 Touch Points)
+  - SoC: BCM21654G (850MHz)
+  - Touch Panel: TMA140 (Max 2 Touch Points?)
   - WIFI/Bluetooth/FM-Radio: BCM4334
 
-![Samsung Galaxy Pocket Plus](https://fdn2.gsmarena.com/vv/pics/samsung/samsung-galaxy-pocket-plus-s5301-black.jpg "Samsung Galaxy Pocket Plus")
-
-### Notice:
-  - Apply patch to source code before build
+![Samsung Galaxy Pocket Plus](http://cdn2.gsmarena.com/vv/pics/samsung/samsung-galaxy-pocket-plus1.jpg "Samsung Galaxy Pocket Plus")
 
 ### Other resource:
   - Kernel source: https://github.com/MLXProjects/android_kernel_rhea
-  - Vendor blobs: https://github.com/MLXProjects/proprietary_vendor_samsung
+  - Vendor blobs: https://github.com/MLXProjects/android_vendor_samsung
 
 ### Credits (Sort by alphabetical order):
-  - bcm216xx
   - Dhinesh77
   - Faizauthar12
-  - ghsr
   - karthick111
   - Pawitp
   - The CyanogenMod Team
   - Wulsic
+  - bcm216xx
+  - chijure
