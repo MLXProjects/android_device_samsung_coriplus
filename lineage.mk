@@ -1,8 +1,8 @@
 # Release name
 PRODUCT_RELEASE_NAME := GalaxyPocketNeo
 
-# Inherit some common CM stuff.
-$(call inherit-product, vendor/cm/config/common_full_phone.mk)
+# Inherit some common Lineage stuff.
+$(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 
 # Inherit device configuration
 $(call inherit-product, device/samsung/corsica/device.mk)
